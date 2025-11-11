@@ -1,0 +1,35 @@
+AF Organization Analysis Summary - IAFDB
+============================================================
+
+Analysis Date: 2025-11-11 22:00:35
+Algorithm: Faes et al. 2002
+Records Analyzed: 32
+Sampling Frequency: 977 Hz
+Epsilon Threshold: π/3 (1.047 radians)
+
+OVERALL STATISTICS:
+------------------------------
+Total Signals: 32
+Average SI: 0.608 ± 0.350
+SI Range: [0.127, 1.000]
+Average Activations: 50.8
+Average Valid LAWs: 50.7
+
+AF TYPE CLASSIFICATION:
+------------------------------
+FLUTTER: 15 records
+  SI: 0.967 ± 0.039
+
+TYPE2: 11 records
+  SI: 0.343 ± 0.070
+
+TYPE3: 6 records
+  SI: 0.196 ± 0.038
+
+EXPECTED RANGES (Faes et al. 2002):
+------------------------------
+Flutter:  SI ~ 1.00
+Type I:   SI ~ 0.75 ± 0.23
+Type II:  SI ~ 0.35 ± 0.11
+Type III: SI ~ 0.15 ± 0.08
+

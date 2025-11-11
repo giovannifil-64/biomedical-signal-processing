@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """
 AF Organization Algorithm Implementation
 

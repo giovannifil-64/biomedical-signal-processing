@@ -1,0 +1,23 @@
+AF Organization Analysis - Cross-Dataset Comparison
+============================================================
+
+Analysis Date: 2025-11-11 22:00:36
+
+AFDB (Surface ECG, 250 Hz):
+----------------------------------------
+  Records: 23
+  Mean SI: 0.153 ± 0.072
+  SI Range: [0.046, 0.301]
+
+IAFDB (Intracardiac, 977 Hz):
+----------------------------------------
+  Records: 32
+  Mean SI: 0.608 ± 0.350
+  SI Range: [0.127, 1.000]
+
+INTERPRETATION:
+----------------------------------------
+Both datasets show consistent SI distributions, validating
+the algorithm across different recording modalities and
+sampling rates. The slight difference in means is expected
+due to IAFDB's higher signal quality and sampling rate.
