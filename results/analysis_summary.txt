@@ -1,0 +1,59 @@
+AF Organization Analysis - Summary Report
+==================================================
+
+Analysis Date: 2025-10-26 21:07:22
+Algorithm: Faes et al. 2002
+Records Analyzed: 23
+Sampling Frequency: 250 Hz
+Epsilon Threshold: 1.047 radians
+
+OVERALL STATISTICS:
+--------------------
+Total Signals: 23
+Average SI: 0.153 ± 0.072
+SI Range: [0.046, 0.301]
+Average Activations: 33.8
+Average Valid LAWs: 33.7
+
+CLASSIFICATION RESULTS:
+-------------------------
+TYPE2: 3 records
+  SI: 0.285 ± 0.022
+  Range: [0.260, 0.301]
+
+TYPE3: 20 records
+  SI: 0.133 ± 0.053
+  Range: [0.046, 0.222]
+
+EXPECTED RANGES (Faes et al. 2002):
+-----------------------------------
+Flutter:  SI ~ 1.00
+Type I:   SI ~ 0.75 ± 0.23
+Type II:  SI ~ 0.35 ± 0.11
+Type III: SI ~ 0.15 ± 0.08
+
+RECORD-BY-RECORD RESULTS:
+----------------------------
+Record_04015: SI=0.200, Type=type3, LAWs=30
+Record_04043: SI=0.100, Type=type3, LAWs=16
+Record_04048: SI=0.216, Type=type3, LAWs=49
+Record_04126: SI=0.069, Type=type3, LAWs=30
+Record_04746: SI=0.222, Type=type3, LAWs=36
+Record_04908: SI=0.301, Type=type2, LAWs=17
+Record_04936: SI=0.167, Type=type3, LAWs=29
+Record_05091: SI=0.111, Type=type3, LAWs=32
+Record_05121: SI=0.260, Type=type2, LAWs=48
+Record_05261: SI=0.179, Type=type3, LAWs=32
+Record_06426: SI=0.076, Type=type3, LAWs=29
+Record_06453: SI=0.046, Type=type3, LAWs=18
+Record_06995: SI=0.186, Type=type3, LAWs=21
+Record_07162: SI=0.292, Type=type2, LAWs=40
+Record_07859: SI=0.111, Type=type3, LAWs=42
+Record_07879: SI=0.075, Type=type3, LAWs=43
+Record_07910: SI=0.185, Type=type3, LAWs=37
+Record_08215: SI=0.118, Type=type3, LAWs=47
+Record_08219: SI=0.080, Type=type3, LAWs=52
+Record_08378: SI=0.096, Type=type3, LAWs=40
+Record_08405: SI=0.124, Type=type3, LAWs=18
+Record_08434: SI=0.141, Type=type3, LAWs=47
+Record_08455: SI=0.152, Type=type3, LAWs=22
