@@ -1,9 +1,24 @@
 """
-PhysioNet AF Data Loader
+AF Data Loader
+==============
+Supports loading from multiple PhysioNet AF databases: AFDB (Surface ECG, 250 Hz) and IAFDB (Intracardiac recordings, 977 Hz).
 
-Supports loading from multiple PhysioNet AF databases:
-- AFDB: Surface ECG (250 Hz)
-- IAFDB: Intracardiac recordings (977 Hz)
+Functions
+---------
+- None: This module does not export any functions.
+
+Classes
+-------
+- `PhysioNetDataLoader`: Load PhysioNet AF Database records from af_data/ folder structure.
+
+Example
+-------
+```python
+from src.af_data_loader import PhysioNetDataLoader
+
+loader = PhysioNetDataLoader()
+signal, fs = loader.read_mit_data("00735", dataset="afdb")
+```
 """
 
 import numpy as np
@@ -14,15 +29,58 @@ from typing import Tuple, Dict, List, Optional
 
 class PhysioNetDataLoader:
     """
-    Load PhysioNet AF Database records from af_data/ folder structure.
-    
-    Supports:
-    - af_data/afdb_records/  (AFDB: 250 Hz)
-    - af_data/iafdb_records/ (IAFDB: 977 Hz)
+    PhysioNetDataLoader
+    ===================
+    Load PhysioNet AF Database records from `af_data/` folder structure.
+
+    Methods
+    -------
+    - `__init__(data_dir)`: Initialize data loader with main af_data folder.
+    - `get_available_datasets()`: Get list of available records for each dataset.
+    - `read_mit_data(record_id, dataset, signal_index)`: Read signal data from MIT-BIH record.
+    - `read_mit_header(record_id, data_dir)`: Read MIT-BIH record header file.
+
+    Attributes
+    ----------
+    - `data_dir (str)`: Main data directory.
+    - `afdb_dir (str)`: AFDB records directory.
+    - `iafdb_dir (str)`: IAFDB records directory.
+
+    Examples
+    --------
+    ```python
+    loader = PhysioNetDataLoader()
+    datasets = loader.get_available_datasets()
+    signal, fs = loader.read_mit_data("00735", "afdb")
+    ```
     """
 
     def __init__(self, data_dir: str = "af_data"):
-        """Initialize data loader with main af_data folder."""
+        """
+        Initialize data loader with main af_data folder.
+
+        Parameters
+        ----------
+        - `data_dir (str)`: Path to the main data directory.
+
+        Returns
+        -------
+        - `None`: This method does not return a value.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        loader = PhysioNetDataLoader("af_data")
+        ```
+
+        Notes
+        -----
+        - Sets up paths for AFDB and IAFDB directories.
+        """
         self.data_dir = data_dir
         self.afdb_dir = os.path.join(data_dir, "afdb_records")
         self.iafdb_dir = os.path.join(data_dir, "iafdb_records")
@@ -30,9 +88,28 @@ class PhysioNetDataLoader:
     def get_available_datasets(self) -> Dict[str, List[str]]:
         """
         Get list of available records for each dataset.
-        
-        Returns:
-            Dictionary with 'afdb' and 'iafdb' lists of record IDs
+
+        Parameters
+        ----------
+        - `None`: This method takes no parameters.
+
+        Returns
+        -------
+        - `Dict[str, List[str]]`: Dictionary with 'afdb' and 'iafdb' lists of record IDs.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        datasets = loader.get_available_datasets()
+        ```
+
+        Notes
+        -----
+        - Scans directories for .hea files to find available records.
         """
         datasets = {"afdb": [], "iafdb": []}
         
@@ -51,18 +128,31 @@ class PhysioNetDataLoader:
     ) -> Tuple[np.ndarray, int]:
         """
         Read signal data from MIT-BIH record.
-        
-        Parameters:
-        -----------
-        record_id : str
-            Record identifier (e.g., '00735', '06453')
-        dataset : str
-            Dataset to load from: 'afdb' (250 Hz) or 'iafdb' (977 Hz)
-        signal_index : int
-            Which signal to extract (0 or 1 for multi-channel)
-        
-        Returns:
-            Tuple of (signal_data_mV, sampling_frequency)
+
+        Parameters
+        ----------
+        - `record_id (str)`: Record identifier (e.g., '00735', '06453').
+        - `dataset (str)`: Dataset to load from ('afdb' or 'iafdb').
+        - `signal_index (int)`: Which signal to extract (0 or 1 for multi-channel).
+
+        Returns
+        -------
+        - `Tuple[np.ndarray, int]`: Signal data in mV and sampling frequency.
+
+        Raises
+        ------
+        - `ValueError`: If dataset is unknown.
+        - `Exception`: If file reading fails.
+
+        Example
+        -------
+        ```python
+        signal, fs = loader.read_mit_data("00735", "afdb", 0)
+        ```
+
+        Notes
+        -----
+        - Converts ADC units to mV using gain of 200.
         """
         # Select appropriate directory
         if dataset.lower() == "afdb":
@@ -98,13 +188,29 @@ class PhysioNetDataLoader:
     def read_mit_header(self, record_id: str, data_dir: Optional[str] = None) -> Dict:
         """
         Read MIT-BIH record header file.
-        
-        Parameters:
-        -----------
-        record_id : str
-            Record identifier
-        data_dir : str or None
-            Directory containing the record. If None, uses self.data_dir
+
+        Parameters
+        ----------
+        - `record_id (str)`: Record identifier.
+        - `data_dir (Optional[str])`: Directory containing the record (uses self.data_dir if None).
+
+        Returns
+        -------
+        - `Dict`: Dictionary with header information (fs, n_signals, etc.).
+
+        Raises
+        ------
+        - `Exception`: If header file cannot be read.
+
+        Example
+        -------
+        ```python
+        info = loader.read_mit_header("00735")
+        ```
+
+        Notes
+        -----
+        - Parses .hea file for record metadata.
         """
         if data_dir is None:
             data_dir = self.data_dir

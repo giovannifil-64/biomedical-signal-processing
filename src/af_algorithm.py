@@ -1,8 +1,25 @@
 """
-AF Organization Algorithm Implementation
+AF Algorithm
+============
+This module contains the core implementation of the algorithm for quantifying atrial fibrillation organization based on wave-morphology similarity, as proposed in the paper "Faes, Luca et al. “A method for quantifying atrial fibrillation organization based on wave-morphology similarity.”"
 
-This module contains the core implementation of the algorithm proposed in the paper Faes, Luca et al. “A method for quantifying atrial fibrillation organization based on wave-morphology similarity.”
-for quantifying atrial fibrillation organization based on wave-morphology similarity.
+Functions
+---------
+- None: This module does not export any functions.
+
+Classes
+-------
+- `AFOrganizationAnalyzer`: Main implementation of the AF organization algorithm.
+- `AFPerformanceEvaluator`: Evaluate algorithm performance and compare to paper results.
+
+Example
+-------
+```python
+from src.af_algorithm import AFOrganizationAnalyzer, AFPerformanceEvaluator
+
+analyzer = AFOrganizationAnalyzer()
+evaluator = AFPerformanceEvaluator(analyzer)
+```
 """
 
 import matplotlib.pyplot as plt
@@ -15,7 +32,38 @@ from typing import List, Tuple, Dict, Optional
 
 class AFOrganizationAnalyzer:
     """
-    Main implementation of the algorithm.
+    AFOrganizationAnalyzer
+    ======================
+    Main implementation of the AF organization algorithm for quantifying atrial fibrillation organization based on wave-morphology similarity.
+
+    Methods
+    -------
+    - `__init__(fs, epsilon, law_duration_ms, blanking_ms)`: Initialize the AF organization analyzer.
+    - `bandpass_filter(data, lowcut, highcut, order)`: Apply bandpass filter (40-250 Hz) using Kaiser window FIR filter.
+    - `lowpass_filter(data, cutoff, order)`: Apply lowpass filter (20 Hz cutoff) using Kaiser window FIR filter.
+    - `detect_atrial_activations(signal)`: Detect atrial activations using adaptive thresholding.
+    - `extract_laws(signal, activation_times)`: Extract Local Activation Waves (LAWs) around activation times.
+    - `normalize_laws(laws)`: L2 normalize LAWs to unit sphere.
+    - `compute_geodesic_distances(normalized_laws)`: Compute geodesic distances on unit sphere between all pairs of LAWs.
+    - `compute_regularity_index(distances, epsilon)`: Compute Regularity Index (SI) based on LAW similarity.
+    - `analyze_signal(signal, plot)`: Complete analysis pipeline: detect activations, extract LAWs, compute SI.
+    - `plot_analysis(signal, activations, laws, SI)`: Plot analysis results.
+
+    Attributes
+    ----------
+    - `fs (int)`: Sampling frequency in Hz.
+    - `epsilon (float)`: Threshold distance in radians for LAW similarity.
+    - `law_duration_ms (int)`: Duration of Local Activation Wave window in ms.
+    - `blanking_ms (int)`: Blanking period to avoid multiple detections in ms.
+    - `law_samples (int)`: Number of samples in LAW window.
+    - `blanking_samples (int)`: Number of samples in blanking period.
+
+    Examples
+    --------
+    ```python
+    analyzer = AFOrganizationAnalyzer(fs=250)
+    SI, activations, laws = analyzer.analyze_signal(signal)
+    ```
     """
 
     def __init__(
@@ -28,16 +76,30 @@ class AFOrganizationAnalyzer:
         """
         Initialize the AF organization analyzer.
 
-        Parameters:
-        -----------
-        fs : int
-            Sampling frequency in Hz (defaults to 250 Hz as-per PhysioNet database)
-        epsilon : float
-            Threshold distance in radians for LAW similarity
-        law_duration_ms : int
-            Duration of Local Activation Wave window in ms
-        blanking_ms : int
-            Blanking period to avoid multiple detections in ms
+        Parameters
+        ----------
+        - `fs (int)`: Sampling frequency in Hz (defaults to 250 Hz as-per PhysioNet database).
+        - `epsilon (float)`: Threshold distance in radians for LAW similarity.
+        - `law_duration_ms (int)`: Duration of Local Activation Wave window in ms.
+        - `blanking_ms (int)`: Blanking period to avoid multiple detections in ms.
+
+        Returns
+        -------
+        - `None`: This method does not return a value.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        analyzer = AFOrganizationAnalyzer(fs=250, epsilon=np.pi/3)
+        ```
+
+        Notes
+        -----
+        - Initializes internal parameters based on the provided values.
         """
         self.fs = fs
         self.epsilon = epsilon
@@ -55,6 +117,31 @@ class AFOrganizationAnalyzer:
     ) -> np.ndarray:
         """
         Apply bandpass filter (40-250 Hz) using Kaiser window FIR filter.
+
+        Parameters
+        ----------
+        - `data (np.ndarray)`: Input signal data.
+        - `lowcut (float)`: Low cutoff frequency in Hz.
+        - `highcut (float)`: High cutoff frequency in Hz.
+        - `order (int)`: Filter order.
+
+        Returns
+        -------
+        - `np.ndarray`: Filtered signal data.
+
+        Raises
+        ------
+        - `ValueError`: If cutoff frequencies are invalid.
+
+        Example
+        -------
+        ```python
+        filtered = analyzer.bandpass_filter(signal)
+        ```
+
+        Notes
+        -----
+        - Uses Kaiser window with beta=8.6 for FIR filter design.
         """
         nyq = 0.5 * self.fs
 
@@ -77,6 +164,30 @@ class AFOrganizationAnalyzer:
     ) -> np.ndarray:
         """
         Apply lowpass filter (20 Hz cutoff) using Kaiser window FIR filter.
+
+        Parameters
+        ----------
+        - `data (np.ndarray)`: Input signal data.
+        - `cutoff (float)`: Cutoff frequency in Hz.
+        - `order (int)`: Filter order.
+
+        Returns
+        -------
+        - `np.ndarray`: Filtered signal data.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        envelope = analyzer.lowpass_filter(np.abs(signal))
+        ```
+
+        Notes
+        -----
+        - Uses Kaiser window with beta=8.6 for FIR filter design.
         """
         nyq = 0.5 * self.fs
         cutoff = min(cutoff, nyq - 1)
@@ -90,6 +201,28 @@ class AFOrganizationAnalyzer:
     def detect_atrial_activations(self, signal: np.ndarray) -> np.ndarray:
         """
         Detect atrial activations using adaptive thresholding.
+
+        Parameters
+        ----------
+        - `signal (np.ndarray)`: Input ECG signal.
+
+        Returns
+        -------
+        - `np.ndarray`: Array of activation indices.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        activations = analyzer.detect_atrial_activations(signal)
+        ```
+
+        Notes
+        -----
+        - Uses envelope-based adaptive thresholding with blanking period.
         """
         filtered = self.bandpass_filter(signal)
         envelope = self.lowpass_filter(np.abs(filtered))
@@ -114,6 +247,29 @@ class AFOrganizationAnalyzer:
     ) -> List[np.ndarray]:
         """
         Extract Local Activation Waves (LAWs) around activation times.
+
+        Parameters
+        ----------
+        - `signal (np.ndarray)`: Input signal data.
+        - `activation_times (np.ndarray)`: Array of activation indices.
+
+        Returns
+        -------
+        - `List[np.ndarray]`: List of extracted LAW arrays.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        laws = analyzer.extract_laws(signal, activations)
+        ```
+
+        Notes
+        -----
+        - Extracts windows of length law_samples around each activation.
         """
         laws = []
 
@@ -131,6 +287,28 @@ class AFOrganizationAnalyzer:
     def normalize_laws(self, laws: List[np.ndarray]) -> np.ndarray:
         """
         L2 normalize LAWs to unit sphere.
+
+        Parameters
+        ----------
+        - `laws (List[np.ndarray])`: List of LAW arrays.
+
+        Returns
+        -------
+        - `np.ndarray`: Array of normalized LAWs.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        normalized = analyzer.normalize_laws(laws)
+        ```
+
+        Notes
+        -----
+        - Normalizes each LAW to have unit L2 norm.
         """
         if not laws:
             return np.array([])
@@ -145,6 +323,28 @@ class AFOrganizationAnalyzer:
     def compute_geodesic_distances(self, normalized_laws: np.ndarray) -> np.ndarray:
         """
         Compute geodesic distances on unit sphere between all pairs of LAWs.
+
+        Parameters
+        ----------
+        - `normalized_laws (np.ndarray)`: Array of normalized LAWs.
+
+        Returns
+        -------
+        - `np.ndarray`: Distance matrix.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        distances = analyzer.compute_geodesic_distances(normalized_laws)
+        ```
+
+        Notes
+        -----
+        - Uses arccos of dot product for geodesic distance.
         """
         if len(normalized_laws) < 2:
             return np.array([])
@@ -160,6 +360,29 @@ class AFOrganizationAnalyzer:
     ) -> float:
         """
         Compute Regularity Index (SI) based on LAW similarity.
+
+        Parameters
+        ----------
+        - `distances (np.ndarray)`: Distance matrix.
+        - `epsilon (Optional[float])`: Threshold distance (uses self.epsilon if None).
+
+        Returns
+        -------
+        - `float`: Regularity Index (SI).
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        SI = analyzer.compute_regularity_index(distances)
+        ```
+
+        Notes
+        -----
+        - SI is the fraction of LAW pairs with distance <= epsilon.
         """
         if epsilon is None:
             epsilon = self.epsilon
@@ -189,6 +412,29 @@ class AFOrganizationAnalyzer:
     ) -> Tuple[float, np.ndarray, List[np.ndarray]]:
         """
         Complete analysis pipeline: detect activations, extract LAWs, compute SI.
+
+        Parameters
+        ----------
+        - `signal (np.ndarray)`: Input ECG signal.
+        - `plot (bool)`: Whether to plot the analysis results.
+
+        Returns
+        -------
+        - `Tuple[float, np.ndarray, List[np.ndarray]]`: SI, activations, laws.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        SI, activations, laws = analyzer.analyze_signal(signal, plot=True)
+        ```
+
+        Notes
+        -----
+        - Performs the full AF organization analysis.
         """
         activations = self.detect_atrial_activations(signal)
         laws = self.extract_laws(signal, activations)
@@ -209,7 +455,34 @@ class AFOrganizationAnalyzer:
         laws: List[np.ndarray],
         SI: float,
     ):
-        """Plot analysis results."""
+        """
+        Plot analysis results.
+
+        Parameters
+        ----------
+        - `signal (np.ndarray)`: Input signal.
+        - `activations (np.ndarray)`: Activation indices.
+        - `laws (List[np.ndarray])`: List of LAWs.
+        - `SI (float)`: Regularity Index.
+
+        Returns
+        -------
+        - `None`: This method does not return a value.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        analyzer.plot_analysis(signal, activations, laws, SI)
+        ```
+
+        Notes
+        -----
+        - Displays plots of signal, activations, and example LAWs.
+        """
         fig, axes = plt.subplots(2, 1, figsize=(12, 8))
 
         time = np.arange(len(signal)) / self.fs
@@ -248,11 +521,57 @@ class AFOrganizationAnalyzer:
 
 class AFPerformanceEvaluator:
     """
+    AFPerformanceEvaluator
+    ======================
     Evaluate algorithm performance and compare to paper results.
+
+    Methods
+    -------
+    - `__init__(analyzer)`: Initialize evaluator with an AFOrganizationAnalyzer instance.
+    - `evaluate_signal(signal, label, true_type)`: Evaluate a single signal.
+    - `classify_af(SI)`: Classify AF type based on SI value using thresholds from paper.
+    - `print_summary()`: Print summary of evaluation results.
+
+    Attributes
+    ----------
+    - `analyzer (AFOrganizationAnalyzer)`: The analyzer instance.
+    - `results (list)`: List of evaluation results.
+
+    Examples
+    --------
+    ```python
+    evaluator = AFPerformanceEvaluator(analyzer)
+    result = evaluator.evaluate_signal(signal, "record1")
+    evaluator.print_summary()
+    ```
     """
 
     def __init__(self, analyzer):
-        """Initialize evaluator with an AFOrganizationAnalyzer instance."""
+        """
+        Initialize evaluator with an AFOrganizationAnalyzer instance.
+
+        Parameters
+        ----------
+        - `analyzer (AFOrganizationAnalyzer)`: The analyzer instance to use.
+
+        Returns
+        -------
+        - `None`: This method does not return a value.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        evaluator = AFPerformanceEvaluator(analyzer)
+        ```
+
+        Notes
+        -----
+        - Initializes the results list.
+        """
         self.analyzer = analyzer
         self.results = []
 
@@ -261,6 +580,30 @@ class AFPerformanceEvaluator:
     ) -> Dict:
         """
         Evaluate a single signal.
+
+        Parameters
+        ----------
+        - `signal (np.ndarray)`: Input ECG signal.
+        - `label (str)`: Label for the signal.
+        - `true_type (Optional[str])`: True AF type if known.
+
+        Returns
+        -------
+        - `Dict`: Dictionary with evaluation results.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        result = evaluator.evaluate_signal(signal, "record1", "type1")
+        ```
+
+        Notes
+        -----
+        - Computes SI and classifies AF type.
         """
         SI, activations, laws = self.analyzer.analyze_signal(signal, plot=False)
 
@@ -283,6 +626,28 @@ class AFPerformanceEvaluator:
     def classify_af(self, SI: float) -> str:
         """
         Classify AF type based on SI value using thresholds from paper.
+
+        Parameters
+        ----------
+        - `SI (float)`: Regularity Index value.
+
+        Returns
+        -------
+        - `str`: Predicted AF type ('flutter', 'type1', 'type2', 'type3').
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        af_type = evaluator.classify_af(0.5)
+        ```
+
+        Notes
+        -----
+        - Thresholds: flutter >=0.9, type1 >=0.49, type2 >=0.24, else type3.
         """
         if SI >= 0.9:
             return "flutter"
@@ -294,7 +659,31 @@ class AFPerformanceEvaluator:
             return "type3"
 
     def print_summary(self):
-        """Print summary of evaluation results."""
+        """
+        Print summary of evaluation results.
+
+        Parameters
+        ----------
+        - `None`: This method takes no parameters.
+
+        Returns
+        -------
+        - `None`: This method does not return a value.
+
+        Raises
+        ------
+        - `None`: No exceptions are raised by this method.
+
+        Example
+        -------
+        ```python
+        evaluator.print_summary()
+        ```
+
+        Notes
+        -----
+        - Prints statistics grouped by predicted AF type.
+        """
         if not self.results:
             print("No results to summarize.")
             return

@@ -12,19 +12,41 @@ from src.af_data_loader import PhysioNetDataLoader
 def save_analysis_results(evaluator, dataset_name, fs):
     """
     Save detailed analysis results for a specific dataset.
-    
-    Results structure:
-    results/
-    ├── afdb/
-    │   ├── analysis_results.csv
-    │   ├── analysis_plots.png
-    │   └── analysis_summary.txt
-    ├── iafdb/
-    │   ├── analysis_results.csv
-    │   ├── analysis_plots.png
-    │   └── analysis_summary.txt
-    └── comparison/
-        └── comparison_report.txt
+
+    Parameters
+    ----------
+    - `evaluator`: The evaluator object containing analysis results.
+    - `dataset_name (str)`: Name of the dataset (e.g., 'afdb' or 'iafdb').
+    - `fs (int)`: Sampling frequency of the dataset.
+
+    Returns
+    -------
+    - `None`: This function does not return a value.
+
+    Raises
+    ------
+    - `None`: No exceptions are raised by this function.
+
+    Example
+    -------
+    ```python
+    save_analysis_results(evaluator, "afdb", 250)
+    ```
+
+    Notes
+    -----
+    - Results structure:
+      results/
+      ├── afdb/
+      │   ├── analysis_results.csv
+      │   ├── analysis_plots.png
+      │   └── analysis_summary.txt
+      ├── iafdb/
+      │   ├── analysis_results.csv
+      │   ├── analysis_plots.png
+      │   └── analysis_summary.txt
+      └── comparison/
+          └── comparison_report.txt
     """
     import os
     results_dir = os.path.join("results", dataset_name.lower())
@@ -139,13 +161,29 @@ def save_analysis_results(evaluator, dataset_name, fs):
 def analyze_dataset(dataset_name: str, fs: int):
     """
     Analyze a single dataset (AFDB or IAFDB).
-    
-    Parameters:
-    -----------
-    dataset_name : str
-        'afdb' or 'iafdb'
-    fs : int
-        Sampling frequency for this dataset
+
+    Parameters
+    ----------
+    - `dataset_name (str)`: Name of the dataset to analyze ('afdb' or 'iafdb').
+    - `fs (int)`: Sampling frequency for this dataset.
+
+    Returns
+    -------
+    - `AFPerformanceEvaluator or None`: The evaluator object if analysis succeeds, None otherwise.
+
+    Raises
+    ------
+    - `None`: No exceptions are raised by this function.
+
+    Example
+    -------
+    ```python
+    evaluator = analyze_dataset("afdb", 250)
+    ```
+
+    Notes
+    -----
+    - This function processes all available records in the specified dataset.
     """
     print(f"\n{'='*70}")
     print(f"Analyzing {dataset_name.upper()} Dataset")
@@ -209,18 +247,36 @@ def analyze_dataset(dataset_name: str, fs: int):
 def main():
     """
     Analyze AF organization across AFDB and/or IAFDB datasets.
-    
-    Expected folder structure:
-    af_data/
-    ├── afdb_records/  (AFDB: 250 Hz)
-    │   ├── 00735.hea, 00735.dat
-    │   └── ... (23 records)
-    └── iafdb_records/ (IAFDB: 977 Hz)
-        ├── 00001.hea, 00001.dat
-        └── ... (25 records)
-    
-    Results will be saved to:
-    results/afdb/, results/iafdb/, results/comparison/
+
+    Parameters
+    ----------
+    - `None`: This function takes no parameters.
+
+    Returns
+    -------
+    - `None`: This function does not return a value.
+
+    Raises
+    ------
+    - `None`: No exceptions are raised by this function.
+
+    Example
+    -------
+    ```python
+    main()
+    ```
+
+    Notes
+    -----
+    - Expected folder structure:
+      af_data/
+      ├── afdb_records/  (AFDB: 250 Hz)
+      │   ├── 00735.hea, 00735.dat
+      │   └── ... (23 records)
+      └── iafdb_records/ (IAFDB: 977 Hz)
+          ├── 00001.hea, 00001.dat
+          └── ... (25 records)
+    - Results will be saved to: results/afdb/, results/iafdb/, results/comparison/
     """
     print("=" * 64)
     print("AF ORGANIZATION ANALYSIS - Multi-Dataset")
@@ -263,6 +319,28 @@ def main():
 def create_comparison_report(results):
     """
     Create comparison report between AFDB and IAFDB analyses.
+
+    Parameters
+    ----------
+    - `results (dict)`: Dictionary containing results from AFDB and IAFDB analyses.
+
+    Returns
+    -------
+    - `None`: This function does not return a value.
+
+    Raises
+    ------
+    - `None`: No exceptions are raised by this function.
+
+    Example
+    -------
+    ```python
+    create_comparison_report({"afdb": evaluator_afdb, "iafdb": evaluator_iafdb})
+    ```
+
+    Notes
+    -----
+    - Saves the comparison report to results/comparison/comparison_report.txt
     """
     os.makedirs("results/comparison", exist_ok=True)
     
