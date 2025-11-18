@@ -1,0 +1,12 @@
+iaf3_tva 8 1000 48000
+iaf3_tva.dat 16 3277 14 0 -7 12263 0 I
+iaf3_tva.dat 16 3277 14 0 208 5883 0 II
+iaf3_tva.dat 16 3277 14 0 -97 -452 0 V1
+iaf3_tva.dat 16 3277 14 0 -184 -28439 0 CS12
+iaf3_tva.dat 16 3277 14 0 -146 -18385 0 CS34
+iaf3_tva.dat 16 3277 14 0 603 -16239 0 CS56
+iaf3_tva.dat 16 3277 14 0 -228 -1183 0 CS78
+iaf3_tva.dat 16 3277 14 0 161 -14219 0 CS90
+# <age>: 67 <sex>: F <diagnosis>: Atrial Fibrillation
+# <medications>: Norvasc, Metroprolol, Altace
+# Note: signals are uncalibrated

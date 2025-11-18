@@ -1,0 +1,13 @@
+iaf5_afw 8 1000 811500
+iaf5_afw.dat 16 3277 14 0 -397 -29077 0 I
+iaf5_afw.dat 16 3277 14 0 -797 31407 0 II
+iaf5_afw.dat 16 3277 14 0 -853 15658 0 aVF
+iaf5_afw.dat 16 3277 14 0 7991 32258 0 CS12
+iaf5_afw.dat 16 3277 14 0 239 -26598 0 CS34
+iaf5_afw.dat 16 3277 14 0 -257 -21782 0 CS56
+iaf5_afw.dat 16 3277 14 0 -213 -20549 0 CS78
+iaf5_afw.dat 16 3277 14 0 -184 3043 0 CS90
+# <age>: 76 <sex>: M <diagnosis>: Atrial Flutter
+# <medications>: Lopressor
+# Isuprel injected at 94, 214 sec
+# Note: signals are uncalibrated

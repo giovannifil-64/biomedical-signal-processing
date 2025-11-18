@@ -1,0 +1,12 @@
+iaf8_ivc 8 1000 59000
+iaf8_ivc.dat 16 3277 14 0 -312 692 0 I
+iaf8_ivc.dat 16 3277 14 0 619 -7146 0 V1
+iaf8_ivc.dat 16 3277 14 0 -225 -31834 0 aVF
+iaf8_ivc.dat 16 3277 14 0 -86 24051 0 CS12
+iaf8_ivc.dat 16 3277 14 0 -8 28560 0 CS34
+iaf8_ivc.dat 16 3277 14 0 -115 -424 0 CS56
+iaf8_ivc.dat 16 3277 14 0 -22 -8233 0 CS78
+iaf8_ivc.dat 16 3277 14 0 16 4905 0 CS90
+# <age>: 68 <sex>: M <diagnosis>: Atrial Flutter
+# <medications>: Atenolol
+# Note: signals are uncalibrated

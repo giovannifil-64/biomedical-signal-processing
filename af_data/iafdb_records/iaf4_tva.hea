@@ -1,0 +1,12 @@
+iaf4_tva 8 1000 67513
+iaf4_tva.dat 16 980 14 0 26 26926 0 I
+iaf4_tva.dat 16 990 14 0 -362 -4442 0 II
+iaf4_tva.dat 16 392 14 0 -11 -25301 0 V1
+iaf4_tva.dat 16 2066 14 0 -110 -4315 0 CS12
+iaf4_tva.dat 16 2062 14 0 19 17559 0 CS34
+iaf4_tva.dat 16 2072 14 0 -4 -2561 0 CS56
+iaf4_tva.dat 16 2064 14 0 -35 -17417 0 CS78
+iaf4_tva.dat 16 2056 14 0 -44 20166 0 CS90
+# <age>: 58 <sex>: M <diagnosis>: Atrial Fibrillation
+# <medications>: Diltiazem, Metoprolol, Digitalis
+# Note: signals are uncalibrated

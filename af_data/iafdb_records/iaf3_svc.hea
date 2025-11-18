@@ -1,0 +1,12 @@
+iaf3_svc 8 1000 99500
+iaf3_svc.dat 16 3277 14 0 783 -27703 0 I
+iaf3_svc.dat 16 3277 14 0 3767 -31049 0 II
+iaf3_svc.dat 16 3277 14 0 -1459 3509 0 V1
+iaf3_svc.dat 16 3277 14 0 89 26092 0 CS12
+iaf3_svc.dat 16 3277 14 0 -134 -6987 0 CS34
+iaf3_svc.dat 16 3277 14 0 18 29671 0 CS56
+iaf3_svc.dat 16 3277 14 0 -70 -11461 0 CS78
+iaf3_svc.dat 16 3277 14 0 -78 -28153 0 CS90
+# <age>: 67 <sex>: F <diagnosis>: Atrial Fibrillation
+# <medications>: Norvasc, Metroprolol, Altace
+# Note: signals are uncalibrated

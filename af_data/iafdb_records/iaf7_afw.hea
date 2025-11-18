@@ -1,0 +1,13 @@
+iaf7_afw 8 1000 661500
+iaf7_afw.dat 16 3277 14 0 -3448 24547 0 II
+iaf7_afw.dat 16 3277 14 0 -543 -11406 0 V1
+iaf7_afw.dat 16 3277 14 0 -1624 -7550 0 aVF
+iaf7_afw.dat 16 3277 14 0 -33 7767 0 CS12
+iaf7_afw.dat 16 3277 14 0 -122 -14791 0 CS34
+iaf7_afw.dat 16 3277 14 0 -134 5457 0 CS56
+iaf7_afw.dat 16 3277 14 0 -240 -19813 0 CS78
+iaf7_afw.dat 16 3277 14 0 -39 -4867 0 CS90
+# <age>: 79 <sex>: F <diagnosis>: Atrial Fib/Flutter
+# <medications>: Propafenone
+# Isuprel injected at 341 sec
+# Note: signals are uncalibrated

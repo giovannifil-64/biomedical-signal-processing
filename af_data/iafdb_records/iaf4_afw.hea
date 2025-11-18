@@ -1,0 +1,13 @@
+iaf4_afw 8 1000 1369253
+iaf4_afw.dat 16 980 14 0 -13 -10289 0 I
+iaf4_afw.dat 16 990 14 0 -79 9359 0 II
+iaf4_afw.dat 16 392 14 0 24 6610 0 V1
+iaf4_afw.dat 16 2066 14 0 -383 11325 0 CS12
+iaf4_afw.dat 16 2062 14 0 69 18155 0 CS34
+iaf4_afw.dat 16 2072 14 0 -99 -22962 0 CS56
+iaf4_afw.dat 16 2064 14 0 -61 1740 0 CS78
+iaf4_afw.dat 16 2056 14 0 -25 6762 0 CS90
+# <age>: 58 <sex>: M <diagnosis>: Atrial Fibrillation
+# <medications>: Diltiazem, Metoprolol, Digitalis
+# Isuprel injected at 343, 547 sec
+# Note: signals are uncalibrated

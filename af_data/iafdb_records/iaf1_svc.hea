@@ -1,0 +1,12 @@
+iaf1_svc 8 1000 57499
+iaf1_svc.dat 16 3277 14 0 -1393 -13807 0 II
+iaf1_svc.dat 16 3277 14 0 444 -30077 0 V1
+iaf1_svc.dat 16 3277 14 0 -607 7420 0 aVF
+iaf1_svc.dat 16 3277 14 0 -81 29229 0 CS12
+iaf1_svc.dat 16 3277 14 0 91 -9902 0 CS34
+iaf1_svc.dat 16 3277 14 0 -147 -27419 0 CS56
+iaf1_svc.dat 16 3277 14 0 -38 13316 0 CS78
+iaf1_svc.dat 16 3277 14 0 -36 16412 0 CS90
+# <age>: 81 <sex>: F <diagnosis>: Atrial Fibrillation
+# <medications>: Atenolol, Monopril
+# Note: signals are uncalibrated

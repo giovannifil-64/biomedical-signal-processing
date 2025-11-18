@@ -1,0 +1,13 @@
+iaf2_afw 8 1000 230500
+iaf2_afw.dat 16 3277 14 0 -255 9835 0 I
+iaf2_afw.dat 16 3277 14 0 1352 -10711 0 II
+iaf2_afw.dat 16 3277 14 0 1385 9166 0 aVF
+iaf2_afw.dat 16 3277 14 0 746 -25761 0 CS12
+iaf2_afw.dat 16 3277 14 0 153 10105 0 CS34
+iaf2_afw.dat 16 3277 14 0 -1165 -16233 0 CS56
+iaf2_afw.dat 16 3277 14 0 -1058 16670 0 CS78
+iaf2_afw.dat 16 3277 14 0 -56 21721 0 CS90
+# <age>: 79 <sex>: M <diagnosis>: Atrial Fibrillation
+# <medications>: Coreg, Digitalis, Diovan
+# Adenosine injected at 123 sec
+# Note: signals are uncalibrated

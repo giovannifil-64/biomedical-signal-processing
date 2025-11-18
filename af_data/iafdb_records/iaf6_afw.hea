@@ -1,0 +1,13 @@
+iaf6_afw 8 1000 361500
+iaf6_afw.dat 16 3277 14 0 -196 -9746 0 I
+iaf6_afw.dat 16 3277 14 0 114 -30907 0 II
+iaf6_afw.dat 16 3277 14 0 -291 -18422 0 V1
+iaf6_afw.dat 16 3277 14 0 -421 22261 0 CS12
+iaf6_afw.dat 16 3277 14 0 -321 -46 0 CS34
+iaf6_afw.dat 16 3277 14 0 1029 2289 0 CS56
+iaf6_afw.dat 16 3277 14 0 -796 -4569 0 CS78
+iaf6_afw.dat 16 3277 14 0 21 1147 0 CS90
+# <age>: 78 <sex>: M <diagnosis>: Atrial Fibrillation
+# <medications>: Metoprolol, Digitalis, Prinivil
+# Adenosine injected at 146 sec
+# Note: signals are uncalibrated

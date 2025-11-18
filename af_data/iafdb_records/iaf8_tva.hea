@@ -1,0 +1,12 @@
+iaf8_tva 8 1000 56000
+iaf8_tva.dat 16 3277 14 0 -1109 -16246 0 I
+iaf8_tva.dat 16 3277 14 0 1956 732 0 V1
+iaf8_tva.dat 16 3277 14 0 -983 -11798 0 aVF
+iaf8_tva.dat 16 3277 14 0 -1494 8606 0 CS12
+iaf8_tva.dat 16 3277 14 0 755 6953 0 CS34
+iaf8_tva.dat 16 3277 14 0 942 10130 0 CS56
+iaf8_tva.dat 16 3277 14 0 -57 22053 0 CS78
+iaf8_tva.dat 16 3277 14 0 -401 20631 0 CS90
+# <age>: 68 <sex>: M <diagnosis>: Atrial Flutter
+# <medications>: Atenolol
+# Note: signals are uncalibrated

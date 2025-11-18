@@ -1,0 +1,12 @@
+iaf1_tva 8 1000 59500
+iaf1_tva.dat 16 3277 14 0 748 1408 0 II
+iaf1_tva.dat 16 3277 14 0 -429 -7519 0 V1
+iaf1_tva.dat 16 3277 14 0 -130 -5817 0 aVF
+iaf1_tva.dat 16 3277 14 0 39 28179 0 CS12
+iaf1_tva.dat 16 3277 14 0 -12053 -6919 0 CS34
+iaf1_tva.dat 16 3277 14 0 -822 4232 0 CS56
+iaf1_tva.dat 16 3277 14 0 359 25217 0 CS78
+iaf1_tva.dat 16 3277 14 0 857 -1031 0 CS90
+# <age>: 81 <sex>: F <diagnosis>: Atrial Fibrillation
+# <medications>: Atenolol, Monopril
+# Note: signals are uncalibrated

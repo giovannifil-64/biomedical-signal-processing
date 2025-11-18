@@ -1,0 +1,13 @@
+iaf3_afw 8 1000 814000
+iaf3_afw.dat 16 3277 14 0 104 16303 0 I
+iaf3_afw.dat 16 3277 14 0 419 4336 0 II
+iaf3_afw.dat 16 3277 14 0 2 8465 0 V1
+iaf3_afw.dat 16 3277 14 0 20 -13616 0 CS12
+iaf3_afw.dat 16 3277 14 0 -118 24018 0 CS34
+iaf3_afw.dat 16 3277 14 0 105 6216 0 CS56
+iaf3_afw.dat 16 3277 14 0 -151 -20654 0 CS78
+iaf3_afw.dat 16 3277 14 0 -177 22323 0 CS90
+# <age>: 67 <sex>: F <diagnosis>: Atrial Fibrillation
+# <medications>: Norvasc, Metroprolol, Altace
+# Isuprel injected at 69 sec
+# Note: signals are uncalibrated

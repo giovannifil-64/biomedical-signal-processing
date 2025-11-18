@@ -1,0 +1,12 @@
+iaf6_tva 8 1000 54500
+iaf6_tva.dat 16 3277 14 0 -339 2285 0 I
+iaf6_tva.dat 16 3277 14 0 -135 -8918 0 II
+iaf6_tva.dat 16 3277 14 0 -1035 31717 0 V1
+iaf6_tva.dat 16 3277 14 0 -329 26299 0 CS12
+iaf6_tva.dat 16 3277 14 0 -9 6418 0 CS34
+iaf6_tva.dat 16 3277 14 0 -20 13481 0 CS56
+iaf6_tva.dat 16 3277 14 0 -85 9733 0 CS78
+iaf6_tva.dat 16 3277 14 0 39 -26784 0 CS90
+# <age>: 78 <sex>: M <diagnosis>: Atrial Fibrillation
+# <medications>: Metoprolol, Digitalis, Prinivil
+# Note: signals are uncalibrated

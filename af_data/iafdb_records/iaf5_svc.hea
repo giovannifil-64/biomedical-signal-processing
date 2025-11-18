@@ -1,0 +1,12 @@
+iaf5_svc 8 1000 183000
+iaf5_svc.dat 16 3277 14 0 -465 31757 0 I
+iaf5_svc.dat 16 3277 14 0 -1492 29654 0 II
+iaf5_svc.dat 16 3277 14 0 -1585 29899 0 aVF
+iaf5_svc.dat 16 3277 14 0 -40 -28084 0 CS12
+iaf5_svc.dat 16 3277 14 0 -51 24245 0 CS34
+iaf5_svc.dat 16 3277 14 0 -69 -7798 0 CS56
+iaf5_svc.dat 16 3277 14 0 -70 -27702 0 CS78
+iaf5_svc.dat 16 3277 14 0 -170 -15608 0 CS90
+# <age>: 76 <sex>: M <diagnosis>: Atrial Flutter
+# <medications>: Lopressor
+# Note: signals are uncalibrated

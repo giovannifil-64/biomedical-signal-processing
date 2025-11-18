@@ -1,0 +1,12 @@
+iaf7_svc 8 1000 146500
+iaf7_svc.dat 16 3277 14 0 -1475 24409 0 II
+iaf7_svc.dat 16 3277 14 0 -54 10174 0 V1
+iaf7_svc.dat 16 3277 14 0 -1017 15986 0 aVF
+iaf7_svc.dat 16 3277 14 0 -1 21605 0 CS12
+iaf7_svc.dat 16 3277 14 0 21 18038 0 CS34
+iaf7_svc.dat 16 3277 14 0 -115 18721 0 CS56
+iaf7_svc.dat 16 3277 14 0 -132 14642 0 CS78
+iaf7_svc.dat 16 3277 14 0 -186 -27830 0 CS90
+# <age>: 79 <sex>: F <diagnosis>: Atrial Fib/Flutter
+# <medications>: Propafenone
+# Note: signals are uncalibrated

@@ -1,0 +1,12 @@
+iaf2_ivc 8 1000 67500
+iaf2_ivc.dat 16 3277 14 0 -128 -7495 0 I
+iaf2_ivc.dat 16 3277 14 0 1357 4711 0 II
+iaf2_ivc.dat 16 3277 14 0 1365 18112 0 aVF
+iaf2_ivc.dat 16 3277 14 0 -97 -11387 0 CS12
+iaf2_ivc.dat 16 3277 14 0 -10 -2594 0 CS34
+iaf2_ivc.dat 16 3277 14 0 -15 -17104 0 CS56
+iaf2_ivc.dat 16 3277 14 0 -43 -23659 0 CS78
+iaf2_ivc.dat 16 3277 14 0 -107 26299 0 CS90
+# <age>: 79 <sex>: M <diagnosis>: Atrial Fibrillation
+# <medications>: Coreg, Digitalis, Diovan
+# Note: signals are uncalibrated
