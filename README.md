@@ -39,6 +39,7 @@ biomedical-signal-processing/
 ├── src/                               # Core implementation modules
 │   ├── af_algorithm.py                # Algorithm classes
 │   ├── af_data_loader.py              # Data loading utilities
+│   ├── generate_algorithm_visuals.py  # Visualization script
 │   └── README.md
 ├── LICENSE                            # License information
 ├── main.py                            # Main execution script
@@ -109,7 +110,14 @@ pip install -r requirements.txt
 > The data is already included in the repository for convenience.
 > Also, ONLY the `.dat` and `.hea` files are necessary for the analysis. The other files are not included.
 
-1. Run the main to execute the complete analysis:
+4. (Optional) Generate algorithm visualizations:
+```bash
+python src/generate_algorithm_visuals.py
+```
+
+This will create detailed step-by-step visualizations of the AF organization algorithm in the `presentation_visuals/` folder.
+
+5. Run the main to execute the complete analysis:
 ```bash
 python main.py
 ```
