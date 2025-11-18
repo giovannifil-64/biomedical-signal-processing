@@ -67,12 +67,10 @@ class AFOrganizationAnalyzer:
 
         low = lowcut / nyq
         high = highcut / nyq
-
-        taps = sgnl.firwin(
-            order + 1, [low, high], pass_zero=False, window=("kaiser", 8.6)
-        )
+        taps = sgnl.firwin(order + 1, [low, high], pass_zero=False, window=("kaiser", 8.6))
 
         filtered = sgnl.filtfilt(taps, 1.0, data)
+        
         return filtered
 
     def lowpass_filter(
@@ -83,11 +81,11 @@ class AFOrganizationAnalyzer:
         """
         nyq = 0.5 * self.fs
         cutoff = min(cutoff, nyq - 1)
+        
         normalized_cutoff = cutoff / nyq
-
         taps = sgnl.firwin(order + 1, normalized_cutoff, window=("kaiser", 8.6))
-
         filtered = sgnl.filtfilt(taps, 1.0, data)
+        
         return filtered
 
     def detect_atrial_activations(self, signal: np.ndarray) -> np.ndarray:
@@ -100,8 +98,8 @@ class AFOrganizationAnalyzer:
 
         above_threshold = envelope > threshold
         activation_indices = []
-
         i = 0
+        
         while i < len(above_threshold):
             if above_threshold[i]:
                 peak_idx = i + np.argmax(envelope[i : i + self.blanking_samples])
@@ -153,9 +151,7 @@ class AFOrganizationAnalyzer:
             return np.array([])
 
         similarities = np.dot(normalized_laws, normalized_laws.T)
-
         similarities = np.clip(similarities, -1, 1)
-
         distances = np.arccos(similarities)
 
         return distances
