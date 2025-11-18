@@ -2,6 +2,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 import pandas as pd
+
 from datetime import datetime
 
 from src.af_algorithm import AFOrganizationAnalyzer, AFPerformanceEvaluator
@@ -104,7 +105,7 @@ def save_analysis_results(evaluator, dataset_name, fs):
         f.write(f"AF Organization Analysis Summary - {dataset_name.upper()}\n")
         f.write("=" * 60 + "\n\n")
         f.write(f"Analysis Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"Algorithm: Faes et al. 2002\n")
+        f.write(f"Algorithm:\n")
         f.write(f"Records Analyzed: {len(df)}\n")
         f.write(f"Sampling Frequency: {fs} Hz\n")
         f.write(f"Epsilon Threshold: π/3 ({np.pi/3:.3f} radians)\n\n")
@@ -125,7 +126,7 @@ def save_analysis_results(evaluator, dataset_name, fs):
                 f.write(f"{af_type.upper()}: {len(subset)} records\n")
                 f.write(f"  SI: {subset['SI'].mean():.3f} ± {subset['SI'].std():.3f}\n\n")
 
-        f.write("EXPECTED RANGES (Faes et al. 2002):\n")
+        f.write("EXPECTED RANGES (From the paper \"Faes, Luca et al. “A method for quantifying atrial fibrillation organization based on wave-morphology similarity.”\"):\n")
         f.write("-" * 30 + "\n")
         f.write("Flutter:  SI ~ 1.00\n")
         f.write("Type I:   SI ~ 0.75 ± 0.23\n")
@@ -221,10 +222,10 @@ def main():
     Results will be saved to:
     results/afdb/, results/iafdb/, results/comparison/
     """
-    print("=" * 70)
+    print("=" * 64)
     print("AF ORGANIZATION ANALYSIS - Multi-Dataset")
-    print("Faes et al. 2002 Algorithm Implementation")
-    print("=" * 70)
+    print("Algorithm Implementation of Faes, Luca et al. 2002")
+    print("=" * 64)
 
     # Check what data is available
     data_loader = PhysioNetDataLoader(data_dir="af_data")
@@ -250,9 +251,9 @@ def main():
     if len(results) == 2:
         create_comparison_report(results)
     
-    print("\n" + "=" * 70)
+    print("\n" + "=" * 64)
     print("ANALYSIS COMPLETE")
-    print("=" * 70)
+    print("=" * 64)
     print("\nResults saved in results/ folder:")
     print("  results/afdb/       - AFDB analysis")
     print("  results/iafdb/      - IAFDB analysis")
@@ -265,9 +266,9 @@ def create_comparison_report(results):
     """
     os.makedirs("results/comparison", exist_ok=True)
     
-    print("\n" + "=" * 70)
+    print("\n" + "=" * 64)
     print("CROSS-DATASET COMPARISON")
-    print("=" * 70)
+    print("=" * 64)
     
     afdb_eval = results.get("afdb")
     iafdb_eval = results.get("iafdb")

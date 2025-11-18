@@ -1,7 +1,7 @@
 """
 AF Organization Algorithm Implementation
 
-This module contains the core implementation of the Faes et al. 2002 algorithm
+This module contains the core implementation of the algorithm proposed in the paper Faes, Luca et al. “A method for quantifying atrial fibrillation organization based on wave-morphology similarity.”
 for quantifying atrial fibrillation organization based on wave-morphology similarity.
 """
 
@@ -15,8 +15,7 @@ from typing import List, Tuple, Dict, Optional
 
 class AFOrganizationAnalyzer:
     """
-    Implementation of Faes et al. 2002 algorithm for quantifying
-    atrial fibrillation organization based on wave-morphology similarity.
+    Main implementation of the algorithm.
     """
 
     def __init__(
@@ -302,16 +301,16 @@ class AFPerformanceEvaluator:
 
         df = pd.DataFrame(self.results)
 
-        print("\n" + "=" * 80)
+        print("\n" + "=" * 64)
         print("EVALUATION SUMMARY")
-        print("=" * 80)
+        print("=" * 64)
 
         print(f"\nTotal signals analyzed: {len(df)}")
         print(f"Average SI: {df['SI'].mean():.3f} ± {df['SI'].std():.3f}")
         print(f"SI range: [{df['SI'].min():.3f}, {df['SI'].max():.3f}]")
 
         print("\nResults by predicted AF type:")
-        print("-" * 80)
+        print("-" * 64)
         for af_type in ["flutter", "type1", "type2", "type3"]:
             subset = df[df["predicted_type"] == af_type]
             if len(subset) > 0:
@@ -320,4 +319,4 @@ class AFPerformanceEvaluator:
                 print(f"  SI: {subset['SI'].mean():.3f} ± {subset['SI'].std():.3f}")
                 print(f"  Avg LAWs: {subset['n_laws'].mean():.1f}")
 
-        print("=" * 80 + "\n")
+        print("=" * 64 + "\n")
