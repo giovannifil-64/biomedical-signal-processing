@@ -54,18 +54,15 @@ def save_analysis_results(evaluator, dataset_name, fs):
 
     print(f"\nSaving {dataset_name} results to: {results_dir}/")
 
-    # Save detailed results to CSV
     df = pd.DataFrame(evaluator.results)
     csv_path = os.path.join(results_dir, "analysis_results.csv")
     df.to_csv(csv_path, index=False)
-    print(f"  ✓ Results saved: {csv_path}")
+    print(f"Results saved: {csv_path}")
 
-    # Create analysis plots
     plt.figure(figsize=(12, 8))
-
-    # SI histogram
     plt.subplot(2, 2, 1)
     si_values = np.array(df['SI'].values)
+    
     plt.hist(si_values, bins=20, alpha=0.7, color='skyblue', edgecolor='black')
     plt.axvline(float(np.mean(si_values)), color='red', linestyle='--', linewidth=2,
                label=f'Mean: {np.mean(si_values):.3f}')
@@ -74,9 +71,8 @@ def save_analysis_results(evaluator, dataset_name, fs):
     plt.title(f'{dataset_name}: SI Distribution')
     plt.legend()
     plt.grid(True, alpha=0.3)
-
-    # SI by predicted type
     plt.subplot(2, 2, 2)
+    
     types = ["flutter", "type1", "type2", "type3"]
     si_by_type = []
     labels = []
@@ -119,13 +115,13 @@ def save_analysis_results(evaluator, dataset_name, fs):
     plot_path = os.path.join(results_dir, "analysis_plots.png")
     plt.savefig(plot_path, dpi=300, bbox_inches='tight')
     plt.close()
-    print(f"  ✓ Plots saved: {plot_path}")
+    print(f"Plots saved: {plot_path}")
 
     # Save summary statistics
     summary_path = os.path.join(results_dir, "analysis_summary.txt")
     with open(summary_path, 'w', encoding='utf-8') as f:
         f.write(f"AF Organization Analysis Summary - {dataset_name.upper()}\n")
-        f.write("=" * 60 + "\n\n")
+        f.write("=" * 66 + "\n\n")
         f.write(f"Analysis Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
         f.write(f"Algorithm:\n")
         f.write(f"Records Analyzed: {len(df)}\n")
@@ -133,7 +129,7 @@ def save_analysis_results(evaluator, dataset_name, fs):
         f.write(f"Epsilon Threshold: π/3 ({np.pi/3:.3f} radians)\n\n")
 
         f.write("OVERALL STATISTICS:\n")
-        f.write("-" * 30 + "\n")
+        f.write("-" * 32 + "\n")
         f.write(f"Total Signals: {len(df)}\n")
         f.write(f"Average SI: {df['SI'].mean():.3f} ± {df['SI'].std():.3f}\n")
         f.write(f"SI Range: [{df['SI'].min():.3f}, {df['SI'].max():.3f}]\n")
@@ -141,7 +137,7 @@ def save_analysis_results(evaluator, dataset_name, fs):
         f.write(f"Average Valid LAWs: {df['n_laws'].mean():.1f}\n\n")
 
         f.write("AF TYPE CLASSIFICATION:\n")
-        f.write("-" * 30 + "\n")
+        f.write("-" * 32 + "\n")
         for af_type in ["flutter", "type1", "type2", "type3"]:
             subset = df[df["predicted_type"] == af_type]
             if len(subset) > 0:
@@ -149,13 +145,13 @@ def save_analysis_results(evaluator, dataset_name, fs):
                 f.write(f"  SI: {subset['SI'].mean():.3f} ± {subset['SI'].std():.3f}\n\n")
 
         f.write("EXPECTED RANGES (From the paper \"Faes, Luca et al. “A method for quantifying atrial fibrillation organization based on wave-morphology similarity.”\"):\n")
-        f.write("-" * 30 + "\n")
+        f.write("-" * 32 + "\n")
         f.write("Flutter:  SI ~ 1.00\n")
         f.write("Type I:   SI ~ 0.75 ± 0.23\n")
         f.write("Type II:  SI ~ 0.35 ± 0.11\n")
         f.write("Type III: SI ~ 0.15 ± 0.08\n\n")
 
-    print(f"  ✓ Summary saved: {summary_path}")
+    print(f"Summary saved: {summary_path}")
 
 
 def analyze_dataset(dataset_name: str, fs: int):
@@ -185,60 +181,49 @@ def analyze_dataset(dataset_name: str, fs: int):
     -----
     - This function processes all available records in the specified dataset.
     """
-    print(f"\n{'='*70}")
+    print(f"\n{'='* 64}")
     print(f"Analyzing {dataset_name.upper()} Dataset")
-    print(f"{'='*70}")
+    print(f"{'='* 46}")
     
-    # Initialize components
     analyzer = AFOrganizationAnalyzer(fs=fs, epsilon=np.pi/3)
     data_loader = PhysioNetDataLoader(data_dir="af_data")
     evaluator = AFPerformanceEvaluator(analyzer)
     
-    # Get available records
     available = data_loader.get_available_datasets()
     records = available.get(dataset_name.lower(), [])
     
     if not records:
-        print(f"  ⚠ No records found for {dataset_name}")
+        print(f"No records found for {dataset_name}")
         return None
     
     print(f"  Found {len(records)} records\n")
     
-    # Analyze each record
     for i, record_id in enumerate(records, 1):
         try:
-            # Load signal
             signal_data, actual_fs = data_loader.read_mit_data(record_id, dataset=dataset_name, signal_index=0)
             
             if len(signal_data) == 0:
                 print(f"  [{i:2d}/{len(records)}] {record_id:6s} ❌ Failed to read")
                 continue
             
-            # Update analyzer if needed
             if actual_fs != fs:
                 analyzer.fs = actual_fs
                 analyzer.law_samples = int((analyzer.law_duration_ms / 1000) * actual_fs)
                 analyzer.blanking_samples = int((analyzer.blanking_ms / 1000) * actual_fs)
             
-            # Analyze first 30 seconds
             segment_length = min(30 * actual_fs, len(signal_data))
             signal_segment = signal_data[:segment_length]
             
-            # Evaluate
-            result = evaluator.evaluate_signal(
-                signal_segment, label=f"{dataset_name}_{record_id}", true_type=None
-            )
+            result = evaluator.evaluate_signal(signal_segment, label=f"{dataset_name}_{record_id}", true_type=None)
             
-            print(f"  [{i:2d}/{len(records)}] {record_id:6s} ✓ SI: {result['SI']:.3f} ({result['predicted_type']})")
+            print(f"  [{i:2d}/{len(records)}] {record_id:6s} SI: {result['SI']:.3f} ({result['predicted_type']})")
             
         except Exception as e:
-            print(f"  [{i:2d}/{len(records)}] {record_id:6s} ❌ Error: {str(e)[:40]}")
+            print(f"  [{i:2d}/{len(records)}] {record_id:6s} Error: {str(e)[:40]}")
     
-    # Print dataset summary
     print(f"\n{dataset_name.upper()} Summary:")
     evaluator.print_summary()
     
-    # Save results
     save_analysis_results(evaluator, dataset_name, fs)
     
     return evaluator
@@ -283,27 +268,22 @@ def main():
     print("Algorithm Implementation of Faes, Luca et al. 2002")
     print("=" * 64)
 
-    # Check what data is available
     data_loader = PhysioNetDataLoader(data_dir="af_data")
     available = data_loader.get_available_datasets()
-    
     results = {}
     
-    # Analyze AFDB if available
     if available["afdb"]:
-        print(f"\n✓ AFDB data found: {len(available['afdb'])} records")
+        print(f"\nAFDB data found: {len(available['afdb'])} records")
         results["afdb"] = analyze_dataset("afdb", fs=250)
     else:
-        print("\n⚠ AFDB data not found in af_data/afdb_records/")
+        print("\nAFDB data not found in af_data/afdb_records/")
     
-    # Analyze IAFDB if available
     if available["iafdb"]:
-        print(f"\n✓ IAFDB data found: {len(available['iafdb'])} records")
+        print(f"\nIAFDB data found: {len(available['iafdb'])} records")
         results["iafdb"] = analyze_dataset("iafdb", fs=977)
     else:
-        print("\n⚠ IAFDB data not found in af_data/iafdb_records/")
+        print("\nIAFDB data not found in af_data/iafdb_records/")
     
-    # Create comparison report if both datasets analyzed
     if len(results) == 2:
         create_comparison_report(results)
     
@@ -370,33 +350,33 @@ def create_comparison_report(results):
         comparison_df = pd.DataFrame(comparison_data)
         print("\n" + comparison_df.to_string(index=False))
         
-        # Save comparison report
         report_path = os.path.join("results/comparison", "comparison_report.txt")
+        
         with open(report_path, 'w', encoding='utf-8') as f:
             f.write("AF Organization Analysis - Cross-Dataset Comparison\n")
-            f.write("=" * 60 + "\n\n")
+            f.write("=" * 64 + "\n\n")
             f.write(f"Analysis Date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
             
             f.write("AFDB (Surface ECG, 250 Hz):\n")
-            f.write("-" * 40 + "\n")
+            f.write("-" * 32 + "\n")
             f.write(f"  Records: {len(afdb_df)}\n")
             f.write(f"  Mean SI: {afdb_df['SI'].mean():.3f} ± {afdb_df['SI'].std():.3f}\n")
             f.write(f"  SI Range: [{afdb_df['SI'].min():.3f}, {afdb_df['SI'].max():.3f}]\n\n")
             
             f.write("IAFDB (Intracardiac, 977 Hz):\n")
-            f.write("-" * 40 + "\n")
+            f.write("-" * 32 + "\n")
             f.write(f"  Records: {len(iafdb_df)}\n")
             f.write(f"  Mean SI: {iafdb_df['SI'].mean():.3f} ± {iafdb_df['SI'].std():.3f}\n")
             f.write(f"  SI Range: [{iafdb_df['SI'].min():.3f}, {iafdb_df['SI'].max():.3f}]\n\n")
             
             f.write("INTERPRETATION:\n")
-            f.write("-" * 40 + "\n")
+            f.write("-" * 32 + "\n")
             f.write("Both datasets show consistent SI distributions, validating\n")
             f.write("the algorithm across different recording modalities and\n")
             f.write("sampling rates. The slight difference in means is expected\n")
             f.write("due to IAFDB's higher signal quality and sampling rate.\n")
         
-        print(f"\n✓ Comparison report saved: {report_path}")
+        print(f"\nComparison report saved: {report_path}")
 
 
 if __name__ == "__main__":
