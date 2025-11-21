@@ -1,12 +1,12 @@
 # Biomedical Signal Processing: AF Organization Analysis
 
-This project implements the atrial fibrillation (AF) organization analysis algorithm proposed in the paper "A Method for Quantifying Atrial Fibrillation Organization Based on Wave-Morphology Similarity" (IEEE Transactions on Biomedical Engineering, 2002)[^1].
+This project implements, in python, the Atrial Fibrillation (AF) organization analysis algorithm proposed in the paper "A Method for Quantifying Atrial Fibrillation Organization Based on Wave-Morphology Similarity" (IEEE Transactions on Biomedical Engineering, 2002)[^1].
 
 _This project is intended for educational purposes only_
 
 ## Algorithm Description
 
-The algorithm quantifies the degree of organization in atrial fibrillation by analyzing the morphological similarity between Local Activation Waves (LAWs).
+The algorithm quantifies the degree of organization in Atrial Fibrillation by analyzing the morphological similarity between Local Activation Waves (LAWs).
 
 The key components are:
 1. **Signal Preprocessing**: Bandpass filtering (40-250 Hz) and envelope detection
@@ -82,40 +82,41 @@ The analysis produces the following materials for each dataset:
 
 ## Run it locally
 
-1. Is highly recommended to create a virtual environment:
+1. First of all, clone the repository:
+```bash
+git clone https://github.com/giovannifil-64/biomedical-signal-processing.git
+cd biomedical-signal-processing
+```
 
+2. Create and activate a virtual environment
+> [!NOTE]
+> Even though a virtual environment is not strictly necessary, it is highly recommended to avoid dependency conflicts.
+
+You can use either `venv` or `conda` based on your preference.
+For `venv`:
 ```bash
 python -m venv af_analysis_env
 source af_analysis_env/bin/activate  # On Windows use `af_analysis_env\Scripts\activate`
 ```
 
-I highly recommend using conda, as you can specify the python version:
-
+For `conda`:
 ```bash
 conda create -n af_analysis python=3.11.4
 conda activate af_analysis
 ```
 
-2. Install the required dependencies:
-
+3. Install the required dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. Download the PhysioNet MIT-BIH Atrial Fibrillation Database (AFDB) and Intracardiac Atrial Fibrillation Database (IAFDB) records and place them in the `af_data/` directory:
+4. Download the PhysioNet MIT-BIH Atrial Fibrillation Database (AFDB) and Intracardiac Atrial Fibrillation Database (IAFDB) records and place them in the `af_data/` directory:
    - AFDB: https://physionet.org/content/afdb/1.0.0/
    - IAFDB: https://physionet.org/content/iafdb/1.0.0/
 
 > [!NOTE]
 > The data is already included in the repository for convenience.
-> Also, ONLY the `.dat` and `.hea` files are necessary for the analysis. The other files are not included.
-
-4. (Optional) Generate algorithm visualizations:
-```bash
-python src/generate_algorithm_visuals.py
-```
-
-This will create detailed step-by-step visualizations of the AF organization algorithm in the `presentation_visuals/` folder.
+> Only the `.dat` and `.hea` files are included, as they are required for the analysis. Other files will be ignored.
 
 5. Run the main to execute the complete analysis:
 ```bash
@@ -123,11 +124,19 @@ python main.py
 ```
 
 This will:
-- Load all PhysioNet AF records present in the `af_data/` directory (both AFDB and IAFDB)
-- Analyze each signal with progress indicator
-- Generate all plots and reports for each dataset
-- Create a cross-dataset comparison report
-- Display final statistics
+   - Load all PhysioNet AF records present in the `af_data/` directory (both AFDB and IAFDB)
+   - Analyze each signal with progress indicator
+   - Generate all plots and reports for each dataset
+   - Create a cross-dataset comparison report
+   - Display final statistics
+
+
+1. (Optional) You can also generate a visualizations of the AF organization algorithm, based on the IAFDB dataset, by running:
+```bash
+python src/generate_algorithm_visuals.py
+```
+
+This will create a step-by-step visualizations of the AF organization algorithm in the `presentation_visuals/` folder.
 
 ## References
 - **Paper**: L. Faes, G. Nollo, R. Antolini, F. Gaita and F. Ravelli, "A method for quantifying atrial fibrillation organization based on wave-morphology similarity," in IEEE Transactions on Biomedical Engineering, vol. 49, no. 12, pp. 1504-1513, Dec. 2002, doi: [10.1109/TBME.2002.805472](https://doi.org/10.1109/tbme.2002.805472).
