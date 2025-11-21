@@ -221,7 +221,10 @@ def analyze_dataset(dataset_name: str, fs: int):
         except Exception as e:
             print(f"  [{i:2d}/{len(records)}] {record_id:6s} Error: {str(e)[:40]}")
     
-    print(f"\n{dataset_name.upper()} Summary:")
+    print("\n" + "=" * 64)
+    print(f"{dataset_name.upper()} SUMMARY")
+    print("=" * 64)
+
     evaluator.print_summary()
     
     save_analysis_results(evaluator, dataset_name, fs)
@@ -264,8 +267,7 @@ def main():
     - Results will be saved to: results/afdb/, results/iafdb/, results/comparison/
     """
     print("=" * 64)
-    print("AF ORGANIZATION ANALYSIS - Multi-Dataset")
-    print("Algorithm Implementation of Faes, Luca et al. 2002")
+    print("ATRIAL FIBRILLATION (AF) ORGANIZATION ANALYSIS")
     print("=" * 64)
 
     data_loader = PhysioNetDataLoader(data_dir="af_data")

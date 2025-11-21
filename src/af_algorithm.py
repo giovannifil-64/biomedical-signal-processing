@@ -690,10 +690,6 @@ class AFPerformanceEvaluator:
 
         df = pd.DataFrame(self.results)
 
-        print("\n" + "=" * 64)
-        print("EVALUATION SUMMARY")
-        print("=" * 64)
-
         print(f"\nTotal signals analyzed: {len(df)}")
         print(f"Average SI: {df['SI'].mean():.3f} ± {df['SI'].std():.3f}")
         print(f"SI range: [{df['SI'].min():.3f}, {df['SI'].max():.3f}]")
