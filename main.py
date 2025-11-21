@@ -84,7 +84,7 @@ def save_analysis_results(evaluator, dataset_name, fs):
             labels.append(f'{af_type.upper()}\n(n={len(subset)})')
 
     if si_by_type:
-        bp = plt.boxplot(si_by_type, labels=labels, patch_artist=True)
+        bp = plt.boxplot(si_by_type, tick_labels=labels, patch_artist=True)
         plt.setp(bp['boxes'], facecolor='lightblue')
         plt.setp(bp['medians'], color='red', linewidth=2)
         plt.axhline(y=0.49, color='orange', linestyle='--', alpha=0.7, label='Type I/II')
@@ -183,7 +183,7 @@ def analyze_dataset(dataset_name: str, fs: int):
     """
     print(f"\n{'='* 64}")
     print(f"Analyzing {dataset_name.upper()} Dataset")
-    print(f"{'='* 46}")
+    print(f"{'='* 64}")
     
     analyzer = AFOrganizationAnalyzer(fs=fs, epsilon=np.pi/3)
     data_loader = PhysioNetDataLoader(data_dir="af_data")
